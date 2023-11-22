@@ -23,7 +23,7 @@ public class TelefoneDAO {
     // A professor passada como parâmetro já deve ter sido criada no banco
     public void create(Telefone telefone, Professor professor) {
         try {
-            String sql = "INSERT INTO telefoneprofessor (tipo, codigo_pais, codigo_area, numero, id_professor) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO telefone_professor (tipo, codigo_pais, codigo_area, numero, id_professor) VALUES (?, ?, ?, ?, ?)";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -45,12 +45,13 @@ public class TelefoneDAO {
         }
     }
 
+    // Função que Recupera Todos os Telefones Cadastrados
     public ArrayList<Telefone> retriveAll() {
 
         ArrayList<Telefone> telefones = new ArrayList<Telefone>();
 
         try {
-            String sql = "SELECT id, tipo, codigo_pais, codigo_area, numero, id_professor FROM telefoneprofessor";
+            String sql = "SELECT id, tipo, codigo_pais, codigo_area, numero, id_professor FROM telefone_professor";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.execute();
@@ -78,7 +79,7 @@ public class TelefoneDAO {
         ArrayList<Telefone> telefones = new ArrayList<Telefone>();
 
         try {
-            String sql = "SELECT id, tipo, codigo_pais, codigo_area, numero FROM telefoneprofessor WHERE id_professor = ?";
+            String sql = "SELECT id, tipo, codigo_pais, codigo_area, numero FROM telefone_professor WHERE id_professor = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.setInt(1, professor.getId());
@@ -102,4 +103,36 @@ public class TelefoneDAO {
         }
     }
 
+    // Deleta todos os Telefones de um Professor
+    public void deleteAllTelefone(int idProfessor) {
+        try {
+            String sql = "DELETE FROM telefone_professor WHERE telefone_professor.id_professor = ?";
+
+            try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+                pstm.setInt(1, idProfessor);
+                pstm.execute();
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Função que deleta um telefone específico de um Professor.
+    public void deleteTelefone(int idProfessor, String telefoneExcluir) {
+        try {
+            String sql = "DELETE FROM telefone_professor WHERE telefone_professor.id_professor = ? AND telefone_professor.numero = ?";
+
+            try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+                pstm.setInt(1, idProfessor);
+                pstm.setString(2, telefoneExcluir);
+                pstm.execute();
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

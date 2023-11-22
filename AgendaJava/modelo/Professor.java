@@ -130,4 +130,14 @@ public class Professor {
         this.telefones.remove(telefone);
     }
 
+    @Override
+    public String toString() {
+        return "Id: " + this.id + 
+                "\nNome: " + this.nome + 
+                "\nCPF: " + this.cpf +
+                "\nData de Nascimento: " + this.dataNascimento +
+                "\nIdade: " + this.idade +
+                "\nSalário: " + this.salario;
+    }
+
 }

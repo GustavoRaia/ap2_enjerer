@@ -1,7 +1,7 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+// import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +23,7 @@ public class ProfessorDAO {
         this.connection = connection;
     }
 
+    /*
     public void createSemTelefone(Professor professor) {
 
         try {
@@ -48,7 +49,8 @@ public class ProfessorDAO {
             throw new RuntimeException(e);
         }
     }
-
+    */
+    
     // Os telefones não precisam estar cadastrados no banco, até porque não faz
     // sentido eles estarem no banco sem uma professor relacionada
     public void createComTelefone(Professor professor) {
@@ -81,6 +83,62 @@ public class ProfessorDAO {
         }
     }
 
+    // public Professor retriveProfessor(int id) {
+    //     try {
+    //         String sql = "SELECT nome, cpf, data_nascimento, idade, salario FROM professor WHERE id = ?";
+
+    //         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+
+    //             pstm.setInt(1, id);
+    //             pstm.execute();
+
+    //             ResultSet rst = pstm.getResultSet();
+
+    //             String nome = rst.getString("nome");
+    //             String cpf = rst.getString("cpf");
+    //             LocalDate data = rst.getObject("data_nascimento", LocalDate.class);
+    //             int idade = rst.getInt("idade");
+    //             Double salario = rst.getDouble("salario");
+
+    //             Professor p = new Professor(id, nome, cpf, data, idade, salario);
+
+    //             return p;
+    //         }
+    //     } catch (SQLException e) {
+    //         throw new RuntimeException(e);
+    //     }
+    // }
+
+    public Professor retriveProfessor(int iDInstrutor){
+
+        try{
+            String sql = "SELECT nome, cpf, data_nascimento, salario FROM professor WHERE id = ?";
+
+			try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+
+				pstm.setInt(1, iDInstrutor);
+                pstm.execute();
+
+                ResultSet rst = pstm.getResultSet();
+
+                rst.next();
+                 
+                String nome = rst.getString("nome");
+                String cpf = rst.getString("cpf");
+                LocalDate dataNascimento = rst.getObject("data_nascimento", LocalDate.class);
+                Double salario = rst.getDouble("salario");
+                
+                Professor professor = new Professor(nome, cpf, dataNascimento, salario);
+                return professor;
+            }
+            
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+    }
+
+
+    // Recupera os Dados do Professor sem os Telefones Cadastrados
     public ArrayList<Professor> retriveAllSemTelefone() {
 
         ArrayList<Professor> professores = new ArrayList<Professor>();
@@ -108,6 +166,7 @@ public class ProfessorDAO {
         }
     }
 
+    // Recupera os dados do Professor com os Telefones Cadastrados
     public ArrayList<Professor> retriveAllComTelefone() {
 
         ArrayList<Professor> professores = new ArrayList<Professor>();
@@ -117,7 +176,7 @@ public class ProfessorDAO {
 
             String sql = "SELECT p.id, p.nome, p.cpf, p.data_nascimento, p.idade, p.salario, t.id, t.tipo, t.codigo_pais, t.codigo_area, t.numero, t.id_professor "
                     + "FROM professor AS p "
-                    + "LEFT JOIN telefoneprofessor AS t ON p.id = t.id_professor";
+                    + "LEFT JOIN telefone_professor AS t ON p.id = t.id_professor";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.execute();
@@ -151,6 +210,39 @@ public class ProfessorDAO {
                     }
                 }
                 return professores;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Função que deleta o Professor pelo ID
+    public void deleteProfessor(Professor professor) {
+        try {
+            String sql = "DELETE FROM professor WHERE id = ?";
+
+            try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+                pstm.setInt(1, professor.getId());
+                pstm.execute();
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    // Função para Alterar o Salário do Professor
+    public void updateSalarioProfessor(int idProfessor, Double novoSalario) {
+        try {
+            String sql = "UPDATE professor SET salario = ? WHERE id = ?";
+
+            try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+                pstm.setDouble(1, novoSalario);
+                pstm.setInt(2, idProfessor);
+                pstm.execute();
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -6,37 +6,48 @@ public class FichaMedica {
 
     // Atributos
     private int id;
-    private int idAluno;
     private double altura;
     private double peso;
     private double imc;
     private String tipoSanguineo;
     private String contatoEmergencia;
     private LocalDate dataExame;
+    private int idAluno;
 
     // Construtores =============================
 
     // Construtor com ID
-    public FichaMedica(int id, int idAluno, double altura, double peso, double imc, String tipoSanguineo, String contatoEmergencia, LocalDate dataExame) {
+    public FichaMedica(int id, double altura, double peso, double imc, String tipoSanguineo, String contatoEmergencia, LocalDate dataExame, int idAluno) {
         this.id = id;
-        this.idAluno = idAluno;
         this.altura = altura;
         this.peso = peso;
         this.imc = calcularIMC(altura, peso);
         this.tipoSanguineo = tipoSanguineo;
         this.contatoEmergencia = contatoEmergencia;
         this.dataExame = dataExame;
+        this.idAluno = idAluno;
     }
 
     // Construtor sem ID
-    public FichaMedica(int idAluno, double altura, double peso, double imc, String tipoSanguineo, String contatoEmergencia, LocalDate dataExame) {
-        this.idAluno = idAluno;
+    public FichaMedica(double altura, double peso, double imc, String tipoSanguineo, String contatoEmergencia, LocalDate dataExame, int idAluno) {
         this.altura = altura;
         this.peso = peso;
         this.imc = calcularIMC(altura, peso);
         this.tipoSanguineo = tipoSanguineo;
         this.contatoEmergencia = contatoEmergencia;
         this.dataExame = dataExame;
+        this.idAluno = idAluno;
+    }
+
+    // Construtor sem ID
+    public FichaMedica(double altura, double peso, String tipoSanguineo, String contatoEmergencia, LocalDate dataExame, int idAluno) {
+        this.altura = altura;
+        this.peso = peso;
+        this.imc = calcularIMC(altura, peso);
+        this.tipoSanguineo = tipoSanguineo;
+        this.contatoEmergencia = contatoEmergencia;
+        this.dataExame = dataExame;
+        this.idAluno = idAluno;
     }
 
     // Construtor Vazio

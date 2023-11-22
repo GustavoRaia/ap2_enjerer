@@ -45,7 +45,7 @@ public class Telefone{
 
     @Override
     public String toString() {
-        return "{'telefone':{'id': "+this.id+", 'tipo': '"+this.tipo+"', 'numero': '+"+this.codigoPais+this.codigoArea+this.numero+"'}}";
+        return "Id: " + this.id + "\n\t\t\tTipo: " + this.tipo + "\n\t\t\tNúmero: +" + this.codigoPais + this.codigoArea + this.numero;
     }
 
 

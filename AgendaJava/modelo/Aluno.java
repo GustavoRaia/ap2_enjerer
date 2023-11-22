@@ -12,6 +12,7 @@ public class Aluno {
     private String telefone;
     private LocalDate dataNascimento;
     private int idade;
+    // private FichaMedica fichaMedica;
 
     // Construtores =============================
 
@@ -23,6 +24,7 @@ public class Aluno {
         this.telefone = telefone;
         this.dataNascimento = dataNascimento;
         this.idade = calculaIdade(dataNascimento);
+        // this.fichaMedica = fichaMedica;
     }
 
     // Construror sem ID
@@ -32,6 +34,7 @@ public class Aluno {
         this.telefone = telefone;
         this.dataNascimento = dataNascimento;
         this.idade = calculaIdade(dataNascimento);
+        // this.fichaMedica = fichaMedica;
     }
 
     // Construror sem Idade como atributo
@@ -41,6 +44,7 @@ public class Aluno {
         this.telefone = telefone;
         this.dataNascimento = dataNascimento;
         this.idade = calculaIdade(dataNascimento);
+        // this.fichaMedica = fichaMedica;
     }
 
     // Construtor Vazio
@@ -73,6 +77,10 @@ public class Aluno {
     public int getIdade() {return idade;}
     public void setIdade(int idade) {this.idade = idade;}
 
+    // // Ficha Médica
+    // public FichaMedica getFichaMedica() {return fichaMedica;}
+    // public void setFichaMedica(FichaMedica fichaMedica) {this.fichaMedica = fichaMedica;}
+        
     // Métodos ==================================
 
     // Calcular Idade
@@ -81,5 +89,6 @@ public class Aluno {
         Period periodo = Period.between(dataNascimento, hoje);
         return periodo.getYears();
     }
-    
+
+
 }

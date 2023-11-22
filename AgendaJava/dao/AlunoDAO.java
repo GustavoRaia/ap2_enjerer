@@ -12,8 +12,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import modelo.Aluno;
-// import modelo.Telefone;
-// import modelo.TipoTelefone;
 
 public class AlunoDAO {
 
@@ -23,6 +21,7 @@ public class AlunoDAO {
         this.connection = connection;
     }
 
+    /*
     public void createAluno(Aluno aluno) {
 
         try {
@@ -48,6 +47,7 @@ public class AlunoDAO {
             throw new RuntimeException(e);
         }
     }
+    */
 
     public void createComFicha(Aluno aluno) {
 
@@ -64,12 +64,15 @@ public class AlunoDAO {
 
                 pstm.execute();
 
+                // FichaMedicaDAO fichaMedicaDAO = new FichaMedicaDAO(connection);
+                // fichaMedicaDAO.create(fichaMedica, aluno);         
+
                 // try (ResultSet rst = pstm.getGeneratedKeys()) {
                 //     while (rst.next()) {
                 //         aluno.setId(rst.getInt(1));
-                //         for (Telefone telefone : aluno.getTelefones()) {
-                //             TelefoneDAO tdao = new TelefoneDAO(connection);
-                //             tdao.create(telefone, aluno);
+                //         for(FichaMedica fichaMedica : aluno;) {
+                //         FichaMedicaDAO fichaMedicaDAO = new FichaMedicaDAO(connection);
+                //         fichaMedicaDAO.create(fichaMedica, aluno);                            
                 //         }
                 //     }
                 // }
@@ -97,6 +100,7 @@ public class AlunoDAO {
                     String telefone = rst.getString("telefone");
                     LocalDate data = rst.getObject("data_nascimento", LocalDate.class);
                     int idade = rst.getInt("idade");
+                    
                     Aluno a = new Aluno(id, nome, cpf, telefone, data, idade);
 
                     alunos.add(a);
@@ -104,6 +108,23 @@ public class AlunoDAO {
             }
             return alunos;
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Função para Alterar o Peso do Aluno
+    public void updateTelefoneAluno(int idAluno, String novoTelefone) {
+        try {
+            String sql = "UPDATE aluno SET telefone = ? WHERE id = ?";
+
+            try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+                pstm.setString(1, novoTelefone);
+                pstm.setInt(2, idAluno);
+                pstm.execute();
+
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
