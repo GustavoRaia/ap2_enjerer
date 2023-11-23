@@ -22,34 +22,6 @@ public class ProfessorDAO {
     public ProfessorDAO(Connection connection) {
         this.connection = connection;
     }
-
-    /*
-    public void createSemTelefone(Professor professor) {
-
-        try {
-            String sql = "INSERT INTO professor (nome, cpf, data_nascimento, idade, salario) VALUES (?, ?, ?, ?, ?)";
-
-            try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-                pstm.setString(1, professor.getNome());
-                pstm.setString(2, professor.getCpf());
-                pstm.setObject(3, professor.getDataNascimento());
-                pstm.setInt(4, professor.getIdade());
-                pstm.setDouble(5, professor.getSalario());
-
-                pstm.execute();
-
-                try (ResultSet rst = pstm.getGeneratedKeys()) {
-                    while (rst.next()) {
-                        professor.setId(rst.getInt(1));
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    */
     
     // Os telefones não precisam estar cadastrados no banco, até porque não faz
     // sentido eles estarem no banco sem uma professor relacionada
@@ -83,32 +55,7 @@ public class ProfessorDAO {
         }
     }
 
-    // public Professor retriveProfessor(int id) {
-    //     try {
-    //         String sql = "SELECT nome, cpf, data_nascimento, idade, salario FROM professor WHERE id = ?";
-
-    //         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-
-    //             pstm.setInt(1, id);
-    //             pstm.execute();
-
-    //             ResultSet rst = pstm.getResultSet();
-
-    //             String nome = rst.getString("nome");
-    //             String cpf = rst.getString("cpf");
-    //             LocalDate data = rst.getObject("data_nascimento", LocalDate.class);
-    //             int idade = rst.getInt("idade");
-    //             Double salario = rst.getDouble("salario");
-
-    //             Professor p = new Professor(id, nome, cpf, data, idade, salario);
-
-    //             return p;
-    //         }
-    //     } catch (SQLException e) {
-    //         throw new RuntimeException(e);
-    //     }
-    // }
-
+    // Retorna uma Busca de Professor pelo seu ID
     public Professor retriveProfessor(int iDInstrutor){
 
         try{
@@ -136,7 +83,6 @@ public class ProfessorDAO {
 			throw new RuntimeException(e);
 		}
     }
-
 
     // Recupera os Dados do Professor sem os Telefones Cadastrados
     public ArrayList<Professor> retriveAllSemTelefone() {

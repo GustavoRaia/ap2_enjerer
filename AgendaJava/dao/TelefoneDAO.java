@@ -74,7 +74,8 @@ public class TelefoneDAO {
         }
     }
 
-    public ArrayList<Telefone> retriveAllPorPessoa(Professor professor) {
+    // Recupera todos os Telefones de um Professor Específico
+    public ArrayList<Telefone> retriveAllPorProfessor(Professor professor) {
 
         ArrayList<Telefone> telefones = new ArrayList<Telefone>();
 
@@ -103,7 +104,7 @@ public class TelefoneDAO {
         }
     }
 
-    // Deleta todos os Telefones de um Professor
+    /* Deleta todos os Telefones de um Professor
     public void deleteAllTelefone(int idProfessor) {
         try {
             String sql = "DELETE FROM telefone_professor WHERE telefone_professor.id_professor = ?";
@@ -118,6 +119,7 @@ public class TelefoneDAO {
             throw new RuntimeException(e);
         }
     }
+    */
 
     // Função que deleta um telefone específico de um Professor.
     public void deleteTelefone(int idProfessor, String telefoneExcluir) {
@@ -135,4 +137,64 @@ public class TelefoneDAO {
             throw new RuntimeException(e);
         }
     }
+
+    // Função que deleta um telefone específico de um Professor (por ID).
+    public void deleteTelefonePorId(int idProfessor, int idExclusao) {
+        try {
+            String sql = "DELETE FROM telefone_professor WHERE telefone_professor.id_professor = ? AND telefone_professor.id = ?";
+
+            try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+                pstm.setInt(1, idProfessor);
+                pstm.setInt(2, idExclusao);
+                pstm.execute();
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Função que altera o Número do Telefone do Professor
+    public void updateTelefoneProfessor(int idAluno, String telefoneAntigo, String telefoneNovo) {
+        try {
+            String sql = "UPDATE telefone_professor, professor SET telefone_professor.numero = ? " + 
+                                "WHERE telefone_professor.numero = ? " + 
+                                     "AND telefone_professor.id_professor = ? " + 
+                                     "AND telefone_professor.id_professor = professor.id;";
+
+            try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+                pstm.setString(1, telefoneNovo);
+                pstm.setString(2, telefoneAntigo);
+                pstm.setInt(3, idAluno);
+                pstm.execute();
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Função que altera o Tipo do Telefone do Professor
+    public void updateTipoTelefoneProfessor(int idAluno, String telefone, int tipoNovo) {
+        try {
+            String sql = "UPDATE telefone_professor, professor SET telefone_professor.tipo = ? " + 
+                             "WHERE telefone_professor.numero = ? " + 
+                                 "AND telefone_professor.id_professor = ? " + 
+                                 " AND telefone_professor.id_professor = professor.id;";
+
+            try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+                pstm.setInt(1, tipoNovo);
+                pstm.setString(2, telefone);
+                pstm.setInt(3, idAluno);
+                pstm.execute();
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

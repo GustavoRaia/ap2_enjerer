@@ -12,11 +12,22 @@ public class Aluno {
     private String telefone;
     private LocalDate dataNascimento;
     private int idade;
-    // private FichaMedica fichaMedica;
+    private FichaMedica fichaMedica;
 
     // Construtores =============================
 
     // Construtor com ID
+    public Aluno(int id, String nome, String cpf, String telefone, LocalDate dataNascimento, int idade, FichaMedica fichaMedica) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.dataNascimento = dataNascimento;
+        this.idade = calculaIdade(dataNascimento);
+        this.fichaMedica = fichaMedica;
+    }
+
+    // Construtor com ID e sem Ficha Médica
     public Aluno(int id, String nome, String cpf, String telefone, LocalDate dataNascimento, int idade) {
         this.id = id;
         this.nome = nome;
@@ -24,17 +35,25 @@ public class Aluno {
         this.telefone = telefone;
         this.dataNascimento = dataNascimento;
         this.idade = calculaIdade(dataNascimento);
-        // this.fichaMedica = fichaMedica;
     }
 
-    // Construror sem ID
+    // Construtor sem ID e sem Ficha Médica
     public Aluno(String nome, String cpf, String telefone, LocalDate dataNascimento, int idade) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.dataNascimento = dataNascimento;
         this.idade = calculaIdade(dataNascimento);
-        // this.fichaMedica = fichaMedica;
+    }
+
+    // Construror sem ID
+    public Aluno(String nome, String cpf, String telefone, LocalDate dataNascimento, FichaMedica fichaMedica) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.dataNascimento = dataNascimento;
+        this.idade = calculaIdade(dataNascimento);
+        this.fichaMedica = fichaMedica;
     }
 
     // Construror sem Idade como atributo
@@ -44,7 +63,6 @@ public class Aluno {
         this.telefone = telefone;
         this.dataNascimento = dataNascimento;
         this.idade = calculaIdade(dataNascimento);
-        // this.fichaMedica = fichaMedica;
     }
 
     // Construtor Vazio
@@ -77,9 +95,9 @@ public class Aluno {
     public int getIdade() {return idade;}
     public void setIdade(int idade) {this.idade = idade;}
 
-    // // Ficha Médica
-    // public FichaMedica getFichaMedica() {return fichaMedica;}
-    // public void setFichaMedica(FichaMedica fichaMedica) {this.fichaMedica = fichaMedica;}
+    // Ficha Médica
+    public FichaMedica getFichaMedica() {return fichaMedica;}
+    public void setFichaMedica(FichaMedica fichaMedica) {this.fichaMedica = fichaMedica;}
         
     // Métodos ==================================
 

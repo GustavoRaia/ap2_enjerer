@@ -2,7 +2,6 @@ package modelo;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 public class Aula {
 
@@ -14,21 +13,8 @@ public class Aula {
     private LocalDate diaAula; 
     private LocalTime horarioInicio;
     private LocalTime horarioFim;
-    private ArrayList<Aluno> alunos_aula;
 
     // Construtores =============================
-
-    // Construtor com ID
-    public Aula(int id, int idAluno, int idProfessor, String tipo, LocalDate diaAula, LocalTime horarioInicio, LocalTime horarioFim, ArrayList<Aluno> alunos_aula) {
-        this.id = id;
-        this.idAluno = idAluno;
-        this.idProfessor = idProfessor;
-        this.tipo = tipo;
-        this.diaAula = diaAula;
-        this.horarioInicio = horarioInicio;
-        this.horarioFim = horarioFim;
-        this.alunos_aula = alunos_aula;
-    }
 
     // Construtor com ID
     public Aula(int id, int idAluno, int idProfessor, String tipo, LocalDate diaAula, LocalTime horarioInicio, LocalTime horarioFim) {
@@ -39,20 +25,8 @@ public class Aula {
         this.diaAula = diaAula;
         this.horarioInicio = horarioInicio;
         this.horarioFim = horarioFim;
-        this.alunos_aula = new ArrayList<Aluno>();
     }
     
-    // Construtor sem ID
-    public Aula(int idAluno, int idProfessor, String tipo, LocalDate diaAula, LocalTime horarioInicio, LocalTime horarioFim, ArrayList<Aluno> alunos_aula) {
-        this.idAluno = idAluno;
-        this.idProfessor = idProfessor;
-        this.tipo = tipo;
-        this.diaAula = diaAula;
-        this.horarioInicio = horarioInicio;
-        this.horarioFim = horarioFim;
-        this.alunos_aula = alunos_aula;
-    }
-
     // Construtor sem ID
     public Aula(int idAluno, int idProfessor, String tipo, LocalDate diaAula, LocalTime horarioInicio, LocalTime horarioFim) {
         this.idAluno = idAluno;
@@ -61,29 +35,8 @@ public class Aula {
         this.diaAula = diaAula;
         this.horarioInicio = horarioInicio;
         this.horarioFim = horarioFim;
-        this.alunos_aula = new ArrayList<Aluno>();
-    }    
+    }
 
-    // // Construtor com ID
-    // public Aula(int id, int idAluno, int idProfessor, String tipo, LocalDate diaAula, LocalTime horarioInicio, LocalTime horarioFim) {
-    //     this.id = id;
-    //     this.idAluno = idAluno;
-    //     this.idProfessor = idProfessor;
-    //     this.tipo = tipo;
-    //     this.diaAula = diaAula;
-    //     this.horarioInicio = horarioInicio;
-    //     this.horarioFim = horarioFim;
-    // }
-    
-    // // Construtor sem ID
-    // public Aula(int idAluno, int idProfessor, String tipo, LocalDate diaAula, LocalTime horarioInicio, LocalTime horarioFim) {
-    //     this.idAluno = idAluno;
-    //     this.idProfessor = idProfessor;
-    //     this.tipo = tipo;
-    //     this.diaAula = diaAula;
-    //     this.horarioInicio = horarioInicio;
-    //     this.horarioFim = horarioFim;
-    // }    
 
     // Construtor Vazio
     public Aula() {
@@ -118,10 +71,6 @@ public class Aula {
     // Horário de Fim da Aula
     public LocalTime getHorarioFim() {return horarioFim;}
     public void setHorarioFim(LocalTime horarioFim) {this.horarioFim = horarioFim;}
-
-    // Alunos na Aula
-    public ArrayList<Aluno> getAlunos_aula() {return alunos_aula;}
-    public void setAlunos_aula(ArrayList<Aluno> alunos_aula) {this.alunos_aula = alunos_aula;}
 
     // Métodos ==================================
     
