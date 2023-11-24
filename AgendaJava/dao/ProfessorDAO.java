@@ -23,8 +23,6 @@ public class ProfessorDAO {
         this.connection = connection;
     }
     
-    // Os telefones não precisam estar cadastrados no banco, até porque não faz
-    // sentido eles estarem no banco sem uma professor relacionada
     public void createComTelefone(Professor professor) {
 
         try {
@@ -179,14 +177,14 @@ public class ProfessorDAO {
     }
     
     // Função para Alterar o Salário do Professor
-    public void updateSalarioProfessor(int idProfessor, Double novoSalario) {
+    public void updateSalarioProfessor(Professor professor, Double novoSalario) {
         try {
             String sql = "UPDATE professor SET salario = ? WHERE id = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
                 pstm.setDouble(1, novoSalario);
-                pstm.setInt(2, idProfessor);
+                pstm.setInt(2, professor.getId());
                 pstm.execute();
 
             }

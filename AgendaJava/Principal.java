@@ -5,16 +5,22 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import modelo.Aluno;
+import modelo.AlunoTurma;
+import modelo.ProfessorTurma;
 import modelo.Aula;
 import modelo.FichaMedica;
 import modelo.Professor;
 import modelo.Telefone;
+import modelo.Turma;
 import modelo.TipoTelefone;
 import dao.ConnectionFactory;
 import dao.FichaMedicaDAO;
 import dao.ProfessorDAO;
+import dao.ProfessorTurmaDAO;
 import dao.TelefoneDAO;
+import dao.TurmaDAO;
 import dao.AlunoDAO;
+import dao.AlunoTurmaDAO;
 import dao.AulaDAO;
 
 public class Principal {
@@ -50,7 +56,7 @@ public class Principal {
         alunoDAO.createComFicha(aluno3);
         alunoDAO.createComFicha(aluno4);
 
-        System.out.println("\nImprimindo os dados após o INSERT\n");
+        System.out.println("\nImprimindo os dados após o INSERT");
         imprimeDadosAluno(alunoDAO, fichaMedicaDAO);
 
         alunoDAO.updateTelefoneAluno(aluno2, "+5521995497954");
@@ -120,12 +126,12 @@ public class Principal {
         System.out.println("Imprimindo os dados após o INSERT");
         imprimeDadosProfessor(professorDAO);
 
-        professorDAO.updateSalarioProfessor(professor1.getId(), 5000.0);
-        professorDAO.updateSalarioProfessor(professor2.getId(), 3500.0);
+        professorDAO.updateSalarioProfessor(professor1, 5000.0);
+        professorDAO.updateSalarioProfessor(professor2, 3500.0);
 
-        telefoneDAO.updateTelefoneProfessor(professor2.getId(), "222983121", "997356384");
+        telefoneDAO.updateTelefoneProfessor(professor2, "222983121", "997356384");
 
-        telefoneDAO.updateTipoTelefoneProfessor(professor3.getId(), "994378235", 2);
+        telefoneDAO.updateTipoTelefoneProfessor(professor3, "994378235", 2);
 
         // Chamando função de Printar utilizando ArrayList de professores como parâmetro
         System.out.println("Imprimindo os Dados após o UPDATE\n");
@@ -139,7 +145,7 @@ public class Principal {
         professorDAO.deleteProfessor(professor4);
 
         // Deleta um único telefone de um Professor
-        telefoneDAO.deleteTelefone(professor2.getId(), "989963144");
+        telefoneDAO.deleteTelefone(professor2, "989963144");
 
         // Chamando função de Printar utilizando ArrayList de professores como parâmetro
         System.out.println("Imprimindo os Dados após o DELETE\n");
@@ -153,9 +159,9 @@ public class Principal {
         // Aulas com Alunos e Professores =========================================================
 
         // Criando Objetos de Aulas marcadas
-        Aula aula1 = new Aula(aluno4.getId(), professor2.getId(), "Personal", LocalDate.of(2023, 11, 19) ,LocalTime.of(21, 0, 0), LocalTime.of(23, 0, 0));
-        Aula aula2 = new Aula(aluno4.getId(), professor2.getId(), "Treinão de Perna", LocalDate.of(2023, 11, 20) ,LocalTime.of(15, 0, 0), LocalTime.of(16, 0, 0));
-        Aula aula3 = new Aula(aluno4.getId(), professor3.getId(), "Personal", LocalDate.of(2023, 11, 21) ,LocalTime.of(20, 0, 0), LocalTime.of(22, 0, 0));
+        Aula aula1 = new Aula(aluno4, professor2, "Personal", LocalDate.of(2023, 11, 19) ,LocalTime.of(21, 0, 0), LocalTime.of(23, 0, 0));
+        Aula aula2 = new Aula(aluno4, professor2, "Treinão de Perna", LocalDate.of(2023, 11, 20) ,LocalTime.of(15, 0, 0), LocalTime.of(16, 0, 0));
+        Aula aula3 = new Aula(aluno4, professor3, "Personal", LocalDate.of(2023, 11, 21) ,LocalTime.of(20, 0, 0), LocalTime.of(22, 0, 0));
 
         // Estabelecendo Conexão com o DAO de Aula
         AulaDAO aulaDAO = new AulaDAO(connection);
@@ -186,10 +192,102 @@ public class Principal {
         System.out.println("- Aula 2 Excluída (Treinão de Perna - Waldemar Guimaraes)");
         imprimeAulas(aulaDAO, professorDAO, alunoDAO);
 
+        // ============================================================================================
+
+
+        // Turmas com Alunos e Professores ============================================================
+
+        // Criando Objetos de Turma
+        Turma turma1 = new Turma("Dança", LocalDate.of(2023, 11, 24), LocalTime.of(16,0,0), LocalTime.of(17,0,0));
+        Turma turma2 = new Turma("Zumba", LocalDate.of(2023, 11, 24), LocalTime.of(18,0,0), LocalTime.of(19,0,0));
+        Turma turma3 = new Turma("Pilates", LocalDate.of(2023, 11, 23), LocalTime.of(20,0,0), LocalTime.of(22,0,0));
+        Turma turma4 = new Turma("Dança", LocalDate.of(2023, 11, 26), LocalTime.of(10,0,0), LocalTime.of(11,0,0));
+
+        // Estabelecendo Conexao com o DAO de Turma
+        TurmaDAO turmaDAO = new TurmaDAO(connection);
+
+        // Criando os Objetos de Turma no BD
+        turmaDAO.createTurma(turma1);
+        turmaDAO.createTurma(turma2);
+        turmaDAO.createTurma(turma3);
+        turmaDAO.createTurma(turma4);
+
+        // Criando Objetos da Relação Aluno Turma
+        AlunoTurma alunoTurma1 = new AlunoTurma(aluno1, 1);
+        AlunoTurma alunoTurma2 = new AlunoTurma(aluno4, 1);
+        AlunoTurma alunoTurma3 = new AlunoTurma(aluno1, 2);
+        AlunoTurma alunoTurma4 = new AlunoTurma(aluno2, 2);
+        AlunoTurma alunoTurma5 = new AlunoTurma(aluno3, 2);
+        AlunoTurma alunoTurma6 = new AlunoTurma(aluno4, 2);
+        AlunoTurma alunoTurma7 = new AlunoTurma(aluno1, 3);
+        AlunoTurma alunoTurma8 = new AlunoTurma(aluno3, 3);
+        AlunoTurma alunoTurma9 = new AlunoTurma(aluno2, 4);
+        AlunoTurma alunoTurma10 = new AlunoTurma(aluno3, 4);
+        AlunoTurma alunoTurma11 = new AlunoTurma(aluno4, 4);
+
+        AlunoTurmaDAO alunoTurmaDAO = new AlunoTurmaDAO(connection);
+
+        alunoTurmaDAO.createAlunoTurma(alunoTurma1);
+        alunoTurmaDAO.createAlunoTurma(alunoTurma2);
+        alunoTurmaDAO.createAlunoTurma(alunoTurma3);
+        alunoTurmaDAO.createAlunoTurma(alunoTurma4);
+        alunoTurmaDAO.createAlunoTurma(alunoTurma5);
+        alunoTurmaDAO.createAlunoTurma(alunoTurma6);
+        alunoTurmaDAO.createAlunoTurma(alunoTurma7);
+        alunoTurmaDAO.createAlunoTurma(alunoTurma8);
+        alunoTurmaDAO.createAlunoTurma(alunoTurma9);
+        alunoTurmaDAO.createAlunoTurma(alunoTurma10);
+        alunoTurmaDAO.createAlunoTurma(alunoTurma11);
+    
+        // Criando Objetos da Relação Professor Turma
+        ProfessorTurma professorTurma1 = new ProfessorTurma(professor3, 3);
+        ProfessorTurma professorTurma2 = new ProfessorTurma(professor2, 4);
+        ProfessorTurma professorTurma3 = new ProfessorTurma(professor1, 1);
+        ProfessorTurma professorTurma4 = new ProfessorTurma(professor2, 1);
+        ProfessorTurma professorTurma5 = new ProfessorTurma(professor3, 2);
+        ProfessorTurma professorTurma6 = new ProfessorTurma(professor1, 2);
+
+        ProfessorTurmaDAO professorTurmaDAO = new ProfessorTurmaDAO(connection);
+
+        professorTurmaDAO.createProfessorTurma(professorTurma1);
+        professorTurmaDAO.createProfessorTurma(professorTurma2);
+        professorTurmaDAO.createProfessorTurma(professorTurma3);
+        professorTurmaDAO.createProfessorTurma(professorTurma4);
+        professorTurmaDAO.createProfessorTurma(professorTurma5);
+        professorTurmaDAO.createProfessorTurma(professorTurma6);
+
+        System.out.println("Imprimindo os Dados após o INSERT");
+        imprimeTurmas(turmaDAO, alunoTurmaDAO, professorTurmaDAO, alunoDAO, professorDAO);
+
+        turmaDAO.updateHorarioInicio(4, LocalTime.of(11,0,0));
+        turmaDAO.updateHorarioFim(4, LocalTime.of(12,0,0));
+        turmaDAO.updateTipoTurma(1, "Cardiozão");
+
+        // turmaDAO.updateHorarioInicio(turma4, LocalTime.of(11,0,0));
+        // turmaDAO.updateHorarioFim(turma4, LocalTime.of(12,0,0));
+        // turmaDAO.updateTipoTurma(turma1, "Cardiozão");
+
+        System.out.println("Imprimindo os Dados após o UPDATE\n");
+        System.out.println("- Horário de Início da Turma 4 (10:00 -> 11:00)");
+        System.out.println("- Horário de Fim da Turma 4 (11:00 -> 12:00)");
+        System.out.println("- Tipo da Turma 1 (Dança -> Cardiozão)");
+        imprimeTurmas(turmaDAO, alunoTurmaDAO, professorTurmaDAO, alunoDAO, professorDAO);
+
+        turmaDAO.deleteTurma(3);
+        professorTurmaDAO.deleteProfessorTurma(6);
+        alunoTurmaDAO.deleteAlunoTurma(11);
+
+        // turmaDAO.deleteTurma(turma3);
+        // professorTurmaDAO.deleteProfessorTurma(professorTurma6);
+        // alunoTurmaDAO.deleteAlunoTurma(alunoTurma11);
+
+        System.out.println("Imprimindo os Dados após o DELETE\n");
+        System.out.println("Turma 3 Excluída (Pilates - 2023-11-23)");
+        System.out.println("Aluno da Turma 4 Excluído (Joao Correia)");
+        System.out.println("Professor da Turma 2 Excluído (Frederico Guedes)");
+        imprimeTurmas(turmaDAO, alunoTurmaDAO, professorTurmaDAO, alunoDAO, professorDAO);
+
     }
-
-    // ============================================================================================
-
 
     // Funções de Impressão de Dados na Tela ======================================================
 
@@ -260,4 +358,35 @@ public class Principal {
         System.out.println("\n========================================================\n");
     }
 
+    private static void imprimeTurmas(TurmaDAO turmaDAO, AlunoTurmaDAO alunoTurmaDAO, ProfessorTurmaDAO professorTurmaDAO, AlunoDAO alunoDAO, ProfessorDAO professorDAO) {
+        ArrayList<Turma> turmas = turmaDAO.retriveAllTurmas();
+        ArrayList<AlunoTurma> alunosTurmas = alunoTurmaDAO.retriveAlunoTurma();
+        ArrayList<ProfessorTurma> professoresTurmas = professorTurmaDAO.retriveProfessorTurma();
+
+        for(Turma t : turmas) {
+            System.out.println("\n======= Dados da Turma " + t.getId() + " ===============================\n");
+            System.out.println("\tId: \t\t\t" + t.getId());
+            System.out.println("\tTipo: \t\t\t" + t.getTipo());
+            System.out.println("\tDia da Aula: \t\t" + t.getDiaAula());
+            System.out.println("\tHorario de Inicio: \t" + t.getHorarioInicio());
+            System.out.println("\tHorario de Fim: \t" + t.getHorarioFim());
+
+            System.out.println("\n\t--------------- Alunos ---------------\n"); 
+            for(AlunoTurma at : alunosTurmas) {
+                if(at.getIdTurma() == t.getId()) {
+                    System.out.println("\t" + alunoDAO.retriveAluno(at.getIdAluno()).getNome());
+                }
+            }
+
+            System.out.println("\n\t------------- Professores ------------\n"); 
+            for(ProfessorTurma pt : professoresTurmas) {
+                if(pt.getIdTurma() == t.getId()) {
+
+                    System.out.println("\t" + professorDAO.retriveProfessor(pt.getIdProfessor()).getNome());
+                }
+            }
+            System.out.println("\n\t--------------------------------------"); 
+        }
+        System.out.println("\n========================================================\n");
+    }
 }

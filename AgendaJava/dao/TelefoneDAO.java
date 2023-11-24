@@ -122,13 +122,13 @@ public class TelefoneDAO {
     */
 
     // Função que deleta um telefone específico de um Professor.
-    public void deleteTelefone(int idProfessor, String telefoneExcluir) {
+    public void deleteTelefone(Professor professor, String telefoneExcluir) {
         try {
             String sql = "DELETE FROM telefone_professor WHERE telefone_professor.id_professor = ? AND telefone_professor.numero = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-                pstm.setInt(1, idProfessor);
+                pstm.setInt(1, professor.getId());
                 pstm.setString(2, telefoneExcluir);
                 pstm.execute();
 
@@ -139,13 +139,13 @@ public class TelefoneDAO {
     }
 
     // Função que deleta um telefone específico de um Professor (por ID).
-    public void deleteTelefonePorId(int idProfessor, int idExclusao) {
+    public void deleteTelefonePorId(Professor professor, int idExclusao) {
         try {
             String sql = "DELETE FROM telefone_professor WHERE telefone_professor.id_professor = ? AND telefone_professor.id = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-                pstm.setInt(1, idProfessor);
+                pstm.setInt(1, professor.getId());
                 pstm.setInt(2, idExclusao);
                 pstm.execute();
 
@@ -156,7 +156,7 @@ public class TelefoneDAO {
     }
 
     // Função que altera o Número do Telefone do Professor
-    public void updateTelefoneProfessor(int idAluno, String telefoneAntigo, String telefoneNovo) {
+    public void updateTelefoneProfessor(Professor professor, String telefoneAntigo, String telefoneNovo) {
         try {
             String sql = "UPDATE telefone_professor, professor SET telefone_professor.numero = ? " + 
                                 "WHERE telefone_professor.numero = ? " + 
@@ -167,7 +167,7 @@ public class TelefoneDAO {
 
                 pstm.setString(1, telefoneNovo);
                 pstm.setString(2, telefoneAntigo);
-                pstm.setInt(3, idAluno);
+                pstm.setInt(3, professor.getId());
                 pstm.execute();
 
             }
@@ -177,7 +177,7 @@ public class TelefoneDAO {
     }
 
     // Função que altera o Tipo do Telefone do Professor
-    public void updateTipoTelefoneProfessor(int idAluno, String telefone, int tipoNovo) {
+    public void updateTipoTelefoneProfessor(Professor professor, String telefone, int tipoNovo) {
         try {
             String sql = "UPDATE telefone_professor, professor SET telefone_professor.tipo = ? " + 
                              "WHERE telefone_professor.numero = ? " + 
@@ -188,7 +188,7 @@ public class TelefoneDAO {
 
                 pstm.setInt(1, tipoNovo);
                 pstm.setString(2, telefone);
-                pstm.setInt(3, idAluno);
+                pstm.setInt(3, professor.getId());
                 pstm.execute();
 
             }

@@ -17,6 +17,17 @@ public class Aula {
     // Construtores =============================
 
     // Construtor com ID
+    public Aula(int id, Aluno aluno, Professor professor, String tipo, LocalDate diaAula, LocalTime horarioInicio, LocalTime horarioFim) {
+        this.id = id;
+        this.idAluno = aluno.getId();
+        this.idProfessor = professor.getId();
+        this.tipo = tipo;
+        this.diaAula = diaAula;
+        this.horarioInicio = horarioInicio;
+        this.horarioFim = horarioFim;
+    }
+
+    // Construtor com ID
     public Aula(int id, int idAluno, int idProfessor, String tipo, LocalDate diaAula, LocalTime horarioInicio, LocalTime horarioFim) {
         this.id = id;
         this.idAluno = idAluno;
@@ -28,9 +39,9 @@ public class Aula {
     }
     
     // Construtor sem ID
-    public Aula(int idAluno, int idProfessor, String tipo, LocalDate diaAula, LocalTime horarioInicio, LocalTime horarioFim) {
-        this.idAluno = idAluno;
-        this.idProfessor = idProfessor;
+    public Aula(Aluno aluno, Professor professor, String tipo, LocalDate diaAula, LocalTime horarioInicio, LocalTime horarioFim) {
+        this.idAluno = aluno.getId();
+        this.idProfessor = professor.getId();
         this.tipo = tipo;
         this.diaAula = diaAula;
         this.horarioInicio = horarioInicio;
